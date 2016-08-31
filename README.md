@@ -46,9 +46,9 @@ This gem provides an extension to the FactoryGirl DSL so that you can accomplish
   create_list(:comment, :blog_post => post, :user => any(:user))
 ```
 
-The `any` method will create a new object using the specified factory the first time it is called and then return that same object every time thereafter.
+The `any` method will return an object using the specified factory with default attributes. On the first invocation of `any` it will create the object; on subsequent calls it will return the same object.
 
-You can also use the `any` method in your factory definitions so that the factory will re-use an associated record by default. This can help speed up a test suite that's already been written and gotten slower over time due to a cascade of records being created on every test without having to rewrite every test case. Note that you must include the `any` call inside a block in your factory so that it will only get evaluated at runtime. Be careful with this method, though, because it could slow down your test suite if you make use of the `build` method since it will insert the `any` defined objects into the database instead of just into memory.
+You can also use the `any` method in your factory definitions so that the factory will re-use an associated record by default. This can make your tests much cleaner when the models get more complicated with layers of required associations. It can also help speed up a test suite that's already been written and gotten slower without having to rewrite every test case.
 
 ```ruby
 FactoryGirl.define do
@@ -59,6 +59,8 @@ FactoryGirl.define do
   end
 end
 ```
+
+Note that you must include the `any` call inside a block in your factory so that it will only get evaluated at runtime. Be careful with this method, though, because it could slow down your test suite if you make use of the `build` method since it will insert the `any` defined objects into the database instead of just into memory.
 
 ### Cleaning Up
 
