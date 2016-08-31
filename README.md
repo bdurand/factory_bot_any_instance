@@ -1,4 +1,4 @@
-This gem provides helper methods to (FactoryGirl)[https://github.com/thoughtbot/factory_girl] to support memoization and reuse of factory created instances.
+This gem provides helper methods to [FactoryGirl](https://github.com/thoughtbot/factory_girl) to support memoization and reuse of factory created instances.
 
 The goal is to clean up test code and speed up performance where your tests use models that have required associations but where those associations are not themselves referenced in the tests.
 
