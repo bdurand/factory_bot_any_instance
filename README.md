@@ -1,4 +1,6 @@
-This gem provides some helper methods to support memoization of instances for use in FactoryGirl. The goal is to clean up test code and speed up performance where you need to test with models that have required associations but where those associations are not being tested.
+This gem provides helper methods to (FactoryGirl)[https://github.com/thoughtbot/factory_girl] to support memoization and reuse of factory created instances.
+
+The goal is to clean up test code and speed up performance where your tests use models that have required associations but where those associations are not themselves referenced in the tests.
 
 ### Example
 
@@ -24,14 +26,14 @@ FactoryGirl.define do
 end
 ```
 
-Now if you need 30 comments for a blog in your test:
+Now if you need 30 comments for a blog post in your test:
 
 ```ruby
   post = create(:blog_post)
   create_list(:comment, :blog_post => post)
 ```
 
-However, this will create 30 unique User records which could be expensive if the User record has it's own required associations or performs several callbacks. A simple solution is to provide a single User record for the Comments:
+However, this will create 30 unique User records which could be expensive if the User record has it's own required associations or performs several callbacks. A simple solution is to provide a single User record for all the Comments:
 
 ```ruby
   post = create(:blog_post)
@@ -39,7 +41,7 @@ However, this will create 30 unique User records which could be expensive if the
   create_list(:comment, :blog_post => post, :user => user)
 ```
 
-This gem provides an extension to the FactoryGirl DSL so that you can accomplish the same thing at the factory level. This can help keep your test code clean since you don't have to declare additional models that aren't relevant to the test.
+This gem provides an extension to the FactoryGirl DSL so that you can accomplish the same thing at the factory level. This can help keep your test code clean since you don't have to declare additional variables that aren't relevant to the test.
 
 ```ruby
   post = create(:blog_post)
@@ -60,11 +62,11 @@ FactoryGirl.define do
 end
 ```
 
-Note that you must include the `any` call inside a block in your factory so that it will only get evaluated at runtime. Be careful with this method, though, because it could slow down your test suite if you make use of the `build` method since it will insert the `any` defined objects into the database instead of just into memory.
+Note that you must include the `any` call inside a block in your factory so that it will only get evaluated at runtime. Be careful with this method, though, because it could slow down your test suite if you make use of the `build` method because the `any` defined objects will be inserted into the database.
 
 ### Cleaning Up
 
-You *MUST* cleanup the instantiated instances between test run or you will have artifacts spanning tests. Most test suites clear the database between runs so these artifacts will also be completely invalid. To do this you must call the `clear_instances` method. You can set up your test suite to do this before every test.
+You *MUST* cleanup the instantiated instances between tests or you will have random artifacts spanning them. Most test suites clear the database between runs so these artifacts will also be completely invalid. To do this you must call the `clear_instances` method. You can set up your test suite to do this before every test.
 
 #### RSpec
 
@@ -114,8 +116,8 @@ Call `FactoryGirl.clear_instances` in the setup method on all your test classes.
 
 ### Helper Methods
 
-All of these examples assume you've included FactoryGirl::Syntax::Methods in your test helper. This gem adds the `any` and `clear_instances` methods to those helpers. If you don't include the helper methods, you must call `FactoryGirl.any` and `FactoryGirl.clear_instances` instead.
+All of these examples assume you've included `FactoryGirl::Syntax::Methods` in your test helper. This gem adds the `any` and `clear_instances` methods to those helpers. If you don't include the helper methods, you must call `FactoryGirl.any` and `FactoryGirl.clear_instances` instead.
 
 ### Parallelizing
 
-This code is not compatible with multithreaded test runners.
+This code is not compatible with multithreaded test runners. It will work fine with multi process test runners.
