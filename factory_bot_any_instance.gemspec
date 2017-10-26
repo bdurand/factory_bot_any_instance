@@ -3,13 +3,13 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name          = "factory_girl_any_instance"
+  spec.name          = "factory_bot_any_instance"
   spec.version       = File.read(File.expand_path("../VERSION", __FILE__)).chomp
   spec.authors       = ["Brian Durand"]
   spec.email         = ["bbdurand@gmail.com"]
-  spec.summary       = "Adds helper methods to FactoryGirl to memoize instances to speed up test suite"
-  spec.description   = "Adds helper methods to FactoryGirl to memoize instances to speed up test suite."
-  spec.homepage      = "https://github.com/bdurand/factory_girl_any_instance"
+  spec.summary       = "Adds helper methods to FactoryBot to memoize instances to speed up test suite"
+  spec.description   = "Adds helper methods to FactoryBot to memoize instances to speed up test suite."
+  spec.homepage      = "https://github.com/bdurand/factory_bot_any_instance"
   spec.license       = "MIT"
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }

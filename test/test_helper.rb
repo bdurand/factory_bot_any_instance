@@ -1,7 +1,7 @@
 require 'minitest/autorun'
 require 'active_record'
 
-require File.expand_path("../../lib/factory_girl_any_instance.rb", __FILE__)
+require File.expand_path("../../lib/factory_bot_any_instance.rb", __FILE__)
 
 ActiveRecord::Base.establish_connection("adapter" => "sqlite3", "database" => ":memory:")
 
@@ -29,7 +29,7 @@ Minitest.after_run do
 end
 
 class Minitest::Spec
-  include FactoryGirl::Syntax::Methods
+  include FactoryBot::Syntax::Methods
   
   before do
     clear_instances

@@ -1,6 +1,6 @@
 require File.expand_path('../test_helper.rb', __FILE__)
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :test, class: Test::Model do
     name "Foo"
   end
@@ -11,7 +11,7 @@ FactoryGirl.define do
   end 
 end
 
-describe FactoryGirl::AnyInstance do
+describe FactoryBot::AnyInstance do
     
   it "should not interfere with creating instances" do
     instance_1 = create(:test)

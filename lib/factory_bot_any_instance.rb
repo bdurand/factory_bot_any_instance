@@ -1,8 +1,8 @@
-require 'factory_girl'
+require 'factory_bot'
 require 'thread'
 
-# This module adds helper methods to FactoryGirl to memoize instances created by factories.
-module FactoryGirl::AnyInstance
+# This module adds helper methods to FactoryBot to memoize instances created by factories.
+module FactoryBot::AnyInstance
   
   # Create or return an instance of the specified factory. If this method has been called
   # previously with the same factory name, then the previously created instance will be returned.
@@ -12,7 +12,7 @@ module FactoryGirl::AnyInstance
     factory_name = factory_name.to_sym
     instance = any_instances[factory_name]
     unless instance
-      instance = FactoryGirl.create(factory_name)
+      instance = FactoryBot.create(factory_name)
       @any_instance_lock.synchronize do
         @any_instances[factory_name] = instance
       end
@@ -37,8 +37,8 @@ module FactoryGirl::AnyInstance
   
 end
 
-FactoryGirl.extend(FactoryGirl::AnyInstance)
-FactoryGirl::Syntax::Methods.module_exec do
-  define_method(:any){|factory_name| FactoryGirl.any(factory_name)}
-  define_method(:clear_instances){ FactoryGirl.clear_instances}
+FactoryBot.extend(FactoryBot::AnyInstance)
+FactoryBot::Syntax::Methods.module_exec do
+  define_method(:any){|factory_name| FactoryBot.any(factory_name)}
+  define_method(:clear_instances){ FactoryBot.clear_instances}
 end
